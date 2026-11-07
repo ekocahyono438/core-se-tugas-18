@@ -13,16 +13,16 @@
                 @csrf
                 <div class="mb-3">
                     <label for="name" class="form-label">Customer nama</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="nadia">
+                        <input type="text" class="form-control" id="name" name="name" placeholder="isi nama">
                     </div>
                      <div class="mb-3">
                         <label for="email" class="form-label">Customer email</label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="wowo@gmail.com">
+                        <input type="text" class="form-control" id="email" name="email" placeholder="isi email dengan format yang benar">
                     </div>
 
                      <div class="mb-3">
                         <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" id="city" name="city" placeholder="bandung">
+                        <input type="text" class="form-control"  id="city" name="city" placeholder="isi kota dengan benar">
                     </div>
                     <div class="mb-3 d-flex justify-content-end">
                         <button type="submit" class="btn btn-primary"  > Save Data Customer</button>

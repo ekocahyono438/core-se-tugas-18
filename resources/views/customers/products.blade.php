@@ -16,9 +16,9 @@
     @php $no =1; @endphp
     @foreach($products as $product)
     <tr>
-        <td>{{$no}}</td>
-        <td>{{$product ['name_products'] }}</td>
-        <td>{{$product ['price'] }}</td>
+        <td>{{ $no }}</td>
+        <td>{{ $product ['name_products'] }}</td>
+        <td>{{ $product ['price'] }}</td>
         
     </tr>
     @php $no++; @endphp

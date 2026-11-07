@@ -6,8 +6,13 @@
   </div>
 </div>
 <div class="row">
-            <div class="col-lg-12">
-              <h1>Customer Data</h1>
+    <div class="col-lg-12">
+      <h1> Data Customer</h1>
+
+      @if(session('success'))
+      <div class="alert alert-success">{{ session ('success') }}</div>
+      @endif
+
     <table class="table">
         <thead>
             <tr>
@@ -15,6 +20,8 @@
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">City</th>
+             <th scope="col">Action</th>
+            </tr>
             </tr>
         </thead>
 
@@ -22,10 +29,21 @@
               @php $no =1; @endphp
               @foreach($customers as $customer)
               <tr>
-                  <td>{{$no}}</td>
-                  <td>{{$customer ['name'] }}</td>
-                  <td>{{$customer ['email'] }}</td>
-                  <td>{{$customer ['city'] }}</td>
+                  <td>{{ $no }}</td>
+                  <td>{{ $customer['name'] }}</td>
+                  <td>{{ $customer['email'] }}</td>
+                  <td>{{ $customer['city'] }}</td>
+                  <td >
+                    <a href="{{ route('customers.show', $customer['id']) }}" class="btn btn-primary"> View Detail</a>
+                    <a href="{{ route('customers.edit', $customer['id']) }}" class="btn btn-primary"> Edit Data</a>
+                    <form action="{{ route('customers.delete', $customer['id']) }}"
+                      method="POST" style="display:inline;"
+                      onsubmit="return confirm('apakah anda yakin menghapus data ini?')">
+                      @csrf
+                      @method('DELETE')
+                      <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                  </td>
               </tr>
               @php $no++; @endphp
               @endforeach

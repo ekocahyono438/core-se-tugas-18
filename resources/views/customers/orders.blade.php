@@ -24,3 +24,4 @@
     @endforeach
   </tbody>
   @endsection
+  <i class="bi bi-archive-fill"></i>
