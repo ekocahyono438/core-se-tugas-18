@@ -2,7 +2,7 @@
 @section("content")
 <div class="row mt-5">
   <div class="col-lg-12 d-flex justify-content-end">
-      <a href="{{route('products')}} "class="btn btn-primary">Back</a>
+      <a href="{{route('products')}} "class="btn btn-primary"> <i class="fa-solid fa-rotate-left"></i> Back</a>
   </div>
 </div>
 <div class="row">
@@ -32,7 +32,7 @@
                     
 
                     <div class="mb-3 d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary" > Save Data produk</button>
+                        <button type="submit" class="btn btn-primary" > <i class="fa-solid fa-circle-down"></i> Save Data produk</button>
                        
 
                     </div>

@@ -1,8 +1,10 @@
-@extends("layouts.app")
+@extends("layouts.admin")
 @section("content")
 <div class="row mt-5">
   <div class="col-lg-12 d-flex justify-content-end">
-      <a href="{{route('customers.create')}} "class="btn btn-primary">Tambah Customer</a>
+    @can('manage.customers')
+      <a href="{{route('customers.create')}} "class="btn btn-primary">  <i class="fa-solid fa-plus"></i>Tambah Customer</a>
+    @endcan  
   </div>
 </div>
 <div class="row">
@@ -26,32 +28,49 @@
         </thead>
 
         <tbody>
-              @php $no =1; @endphp
+             
               @foreach($customers as $customer)
               <tr>
-                  <td>{{ $no }}</td>
+                  <td>{{ $customers->firstItem() + $loop->index }}</td>
                   <td>{{ $customer['name'] }}</td>
                   <td>{{ $customer['email'] }}</td>
                   <td>{{ $customer['city'] }}</td>
                   <td >
-                    <a href="{{ route('customers.show', $customer['id']) }}" class="btn btn-primary"> View Detail</a>
-                    <a href="{{ route('customers.edit', $customer['id']) }}" class="btn btn-primary"> Edit Data</a>
+                    @can('view.customers')
+                    <a href="{{ route('customers.show', $customer['id']) }}" class="btn btn-primary "> 
+                    <i class="fa-solid fa-eye"></i> Detal </a>
+                    @endcan
+
+                    @can('manage.customers')
+                    <a href="{{ route('customers.edit', $customer['id']) }}" class="btn btn-warning "> 
+                    <i class="fa-solid fa-pen-to-square"></i>Edit</a>
+                    @endcan
+
+                    @can('delete.customers')
                     <form action="{{ route('customers.delete', $customer['id']) }}"
                       method="POST" style="display:inline;"
                       onsubmit="return confirm('apakah anda yakin menghapus data ini?')">
                       @csrf
                       @method('DELETE')
-                      <button type="submit" class="btn btn-danger">Delete</button>
+              
+                      <button type="submit" class="btn btn-danger" >  
+                      <i class="fa-solid fa-trash"></i>Delete</button>
                     </form>
+                    @endcan
                   </td>
               </tr>
-              @php $no++; @endphp
+             
               @endforeach
         </tbody>
       
     </table>
     </div>    
   </div>
+  
+    <div class="col-lg-12">
+      {{ $customers->links() }}
+    </div>
+  
 
 @endsection
            

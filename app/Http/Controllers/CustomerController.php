@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Http\Requests\CustomerRequest;
 
 class CustomerController extends Controller
 {
     public function index(){
         // select *from
-        $customers = Customer::all();
+        $customers = Customer::paginate(2);
         return view ('Customers.index', ['customers'=>$customers]);
     }
     public function create(){
         return view('customers.create');
     }
 
-    public function store(Request $request){
+    public function store(CustomerRequest $request ){
+      $validated = $request->validated();
       Customer::create([
         'name' => $request->name,
         'email' => $request->email,
