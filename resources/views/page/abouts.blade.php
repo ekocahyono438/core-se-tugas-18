@@ -1,5 +1,5 @@
 
-@extends("layouts.app")
+@extends("layouts.admin")
 @section("content")
 <h1>Tentang Toko</h1>
 <table class="table">

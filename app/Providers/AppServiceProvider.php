@@ -21,7 +21,8 @@ class AppServiceProvider extends ServiceProvider
      * Bootstrap any application services.
      */
     public function boot(): void
-    {    //untuk customers
+    {    
+        //untuk customers
         Paginator::useBootstrapFive();
         Gate::define('view.customers', function($user){
             return in_array($user->role, ['admin', 'staff', 'manager']);
@@ -36,9 +37,10 @@ class AppServiceProvider extends ServiceProvider
         });
         //akhir untuk customers
 
+
         //untuk orders
          Paginator::useBootstrapFive();
-        Gate::define('view.orders', function($user){
+         Gate::define('view.orders', function($user){
             return in_array($user->role, ['admin', 'staff', 'manager']);
         });
         

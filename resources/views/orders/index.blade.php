@@ -53,12 +53,12 @@
                     @endcan
 
                     @can('view.orders')
-                      <a href="{{ route('orders.show', $order['id']) }}" class="btn btn-primary"> 
+                      <a href="{{ route('orders.show', $order['id']) }}" class="btn btn-primary nav-zoom"> 
                       <i class="fa-solid fa-eye"></i>Detail</a>
                     @endcan
 
                     @can('manage.orders') 
-                      <a href="{{ route('orders.edit', $order['id']) }}" class="btn btn-warning">  
+                      <a href="{{ route('orders.edit', $order['id']) }}" class="btn btn-warning nav-zoom">  
                       <i class="fa-solid fa-pen-to-square"></i>Edit</a>
                     @endcan
 
@@ -68,7 +68,7 @@
                         onsubmit="return confirm('apakah anda yakin menghapus data ini?')">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger" ><i class="fa-solid fa-trash"></i> Delete</button>
+                        <button type="submit" class="btn btn-danger nav-zoom" ><i class="fa-solid fa-trash"></i> Delete</button>
                       </form>
                     @endcan
                   </td>

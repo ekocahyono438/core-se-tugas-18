@@ -37,12 +37,12 @@
                   <td>{{ $customer['city'] }}</td>
                   <td >
                     @can('view.customers')
-                    <a href="{{ route('customers.show', $customer['id']) }}" class="btn btn-primary "> 
+                    <a href="{{ route('customers.show', $customer['id']) }}" class="btn btn-primary nav-zoom "> 
                     <i class="fa-solid fa-eye"></i> Detal </a>
                     @endcan
 
                     @can('manage.customers')
-                    <a href="{{ route('customers.edit', $customer['id']) }}" class="btn btn-warning "> 
+                    <a href="{{ route('customers.edit', $customer['id']) }}" class="btn btn-warning nav-zoom "> 
                     <i class="fa-solid fa-pen-to-square"></i>Edit</a>
                     @endcan
 
@@ -53,7 +53,7 @@
                       @csrf
                       @method('DELETE')
               
-                      <button type="submit" class="btn btn-danger" >  
+                      <button type="submit" class="btn btn-danger nav-zoom " >  
                       <i class="fa-solid fa-trash"></i>Delete</button>
                     </form>
                     @endcan
