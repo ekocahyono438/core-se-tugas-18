@@ -61,15 +61,15 @@ Route::get('/orders', [OrderController::class, 'index'])
     ->name("orders");
 
 Route::get('/orders/create',[OrderController::class, 'create'])
-    ->middleware('can:manage.orders')
+    ->middleware('can:manager.orders')
     ->name('orders.create');
 
 Route::post('/orders/store',[OrderController::class, 'store'])
-    ->middleware('can:manage.orders')
+    ->middleware('can:manager.orders')
     ->name('orders.store');
 
 Route::put('/orders/{id}',[OrderController::class, 'update'])
-    ->middleware('can:manage.orders')
+    ->middleware('can:manager.orders')
     ->name('orders.update');
 
 Route::delete('/orders/{id}',[OrderController::class, 'destroy'])
@@ -77,7 +77,7 @@ Route::delete('/orders/{id}',[OrderController::class, 'destroy'])
     ->name('orders.delete');
 
 Route::get('/orders/{id}/edit',[OrderController::class, 'edit'])
-    ->middleware('can:manage.orders')
+    ->middleware('can:manager.orders')
     ->name('orders.edit');
 
 Route::patch('/orders/{order}/approve',[OrderController::class, 'approve'])

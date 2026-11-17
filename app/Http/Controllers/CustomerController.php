@@ -9,7 +9,7 @@ class CustomerController extends Controller
 {
     public function index(){
         // select *from
-        $customers = Customer::paginate(2);
+        $customers = Customer::paginate(5);
         return view ('Customers.index', ['customers'=>$customers]);
     }
     public function create(){

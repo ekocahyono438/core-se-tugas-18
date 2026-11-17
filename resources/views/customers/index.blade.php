@@ -1,9 +1,9 @@
 @extends("layouts.admin")
 @section("content")
 <div class="row mt-5">
-  <div class="col-lg-12 d-flex justify-content-end">
+  <div class="col-lg-12 d-flex justify-content-end ">
     @can('manage.customers')
-      <a href="{{route('customers.create')}} "class="btn btn-primary">  <i class="fa-solid fa-plus"></i>Tambah Customer</a>
+      <a href="{{route('customers.create')}} "class="btn btn-primary nav-zoom">  <i class="fa-solid fa-plus"></i>Tambah Customer</a>
     @endcan  
   </div>
 </div>

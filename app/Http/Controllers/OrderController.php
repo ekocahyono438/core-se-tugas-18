@@ -7,13 +7,12 @@ use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\http\Request;
 use App\Http\Requests\OrderRequest;
-
-
+use App\Services\OrderServices;
 
 class OrderController extends Controller
 {
     public function index(){
-        $orders = Order::with('Customer')->paginate(2);
+        $orders = Order::with('Customer')->paginate(10);
         return View ("orders.index",["orders"=>$orders]);
     }
 
@@ -22,22 +21,21 @@ class OrderController extends Controller
         return view('orders.create', ['customers'=> $customers]);
     }
 
-     public function store(OrderRequest $request){
+     public function store(OrderRequest $request, OrderServices $orderServices){
+
       $validated = $request->validated();
+
+      $customer = Customer::findOrFail($validated['customer_id']);
+
+      unset($validated['customer_id']);
+
+      $orderServices->createOrder($customer, $validated);
+      
+      return redirect()->route('orders');
        
-      $status = $request->total < 1000000 ? 'approved' : 'pending';
+      //$status = $request->total < 1000000 ? 'approved' : 'pending';
 
-       Order::create([
-
-        'customer_id' => $request->customer_id,
-        'order_number' => $request->order_number,
-        'order_date' => $request->order_date,
-        'total' => $request->total,
-        'status' => $status,
-        
-      ]);
-    
-      return redirect()->route('orders')->with('success', 'Order berhasil ditambah');
+      
     }
 
     public function show($id){

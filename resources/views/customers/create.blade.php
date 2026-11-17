@@ -1,4 +1,4 @@
-@extends("layouts.app")
+@extends("layouts.admin")
 @section("content")
 <div class="row mt-5">
   <div class="col-lg-12 d-flex justify-content-end">

@@ -2,8 +2,8 @@
 @section("content")
 <div class="row mt-5">
   <div class="col-lg-12 d-flex justify-content-end">
-   @can('manage.orders')
-      <a href="{{route('orders.create')}} "class="btn btn-primary"> 
+   @can('manager.orders')
+      <a href="{{route('orders.create')}} "class="btn btn-primary nav-zoom"> 
       <i class="fa-solid fa-plus"></i> Tambah Order</a>
    @endcan
   </div>
@@ -44,7 +44,7 @@
                     @can('approve.orders', $order)
                      <form action="{{ route('orders.approve', $order['id']) }}"
                         method="POST" style="display:inline;"
-                        onsubmit="return confirm('apakah anda yakin menghapus data ini?')">
+                        onsubmit="return confirm('apakah anda yakin approve data ini?')">
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="btn btn-success" >
@@ -57,7 +57,7 @@
                       <i class="fa-solid fa-eye"></i>Detail</a>
                     @endcan
 
-                    @can('manage.orders') 
+                    @can('manager.orders') 
                       <a href="{{ route('orders.edit', $order['id']) }}" class="btn btn-warning nav-zoom">  
                       <i class="fa-solid fa-pen-to-square"></i>Edit</a>
                     @endcan
