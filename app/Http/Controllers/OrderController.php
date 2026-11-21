@@ -11,9 +11,47 @@ use App\Services\OrderServices;
 
 class OrderController extends Controller
 {
-    public function index(){
-        $orders = Order::with('Customer')->paginate(10);
-        return View ("orders.index",["orders"=>$orders]);
+   public function index(Request $request)
+{
+    $search = $request->query('search') ?? ($_GET['search'] ?? null);
+    $status = $request->query('status') ?? ($_GET['status'] ?? null);
+
+    $query = Order::query();
+
+    if (!empty($status)) {
+        $query->where('status', $status);
+    }
+
+    if (!empty($search)) {
+        $query->whereHas('Customer', function ($customerQuery) use ($search) {
+            $customerQuery->where('name', 'like', '%' . $search . '%');
+        });
+    }
+
+    $totalOrders = (clone $query)->count();
+    $totalAmount = (clone $query)->sum('total');
+
+    $orders = (clone $query)
+        ->with('Customer')
+        ->latest()
+        ->paginate(5)
+        ->withQueryString();
+
+    $status_data = Order::query()
+        ->select('status')
+        ->distinct()
+        ->orderBy('status')
+        ->pluck('status');
+
+    return view('orders.index', compact(
+        'orders',
+        'search',
+        'status',
+        'status_data',
+        'totalOrders',
+        'totalAmount'
+    ));
+
     }
 
     public function create(){
@@ -38,19 +76,19 @@ class OrderController extends Controller
       
     }
 
-    public function show($id){
+    public function show( int $id){
       $orders= Order::findOrfail($id);
       return view('orders.show',['orders'=> $orders]);
     }
 
-    public function edit($id){
+    public function edit(int $id){
       $orders= Order::findOrfail($id);
       $customers= Customer::all();
 
       return view('orders.edit',['orders'=> $orders, 'customers'=>$customers]);
     }
 
-    public function update(OrderRequest $request , $id){
+    public function update(OrderRequest $request , int $id){
       //$validated= Customer::findOrfail($id);
       $orders= Order::findOrfail($id);
 
@@ -67,13 +105,13 @@ class OrderController extends Controller
     public function approve(Order $order){
       $order ->update([
         'status'=> 'approved',
-        'approved_by' => auth::user()->id,
+        'approved_by' => Auth::user()->id,
         'approved_at' => now(),
       ]);
       return redirect()->back()->with('success', 'Order berhasil di-approve.');
     }
 
-    public function destroy($id){
+    public function destroy( int $id){
         $orders= Order::findOrfail($id);
         $orders->delete();
         

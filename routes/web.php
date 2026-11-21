@@ -7,7 +7,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductsController;
-use App\Models\product;
+
 
 
 Route::middleware('auth')->group(function(){
@@ -55,7 +55,7 @@ Route::get('/products/{id}',[ProductsController::class, 'show'])->name('products
 // Akhir Route buat Product
 
 // route untuk orders
-Route::get('/orders', [OrderController::class, 'orders']);
+//Route::get('/orders', [OrderController::class, 'orders']);
 Route::get('/orders', [OrderController::class, 'index'])
     ->middleware('can:view.orders')
     ->name("orders");

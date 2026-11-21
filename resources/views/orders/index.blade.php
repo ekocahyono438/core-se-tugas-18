@@ -1,15 +1,82 @@
 @extends("layouts.admin")
 @section("content")
-<div class="row mt-5">
-  <div class="col-lg-12 d-flex justify-content-end">
-   @can('manager.orders')
-      <a href="{{route('orders.create')}} "class="btn btn-primary nav-zoom"> 
-      <i class="fa-solid fa-plus"></i> Tambah Order</a>
-   @endcan
+  <div class="row mt-5">
+    <div class="col-lg-12 d-flex justify-content-end">
+      @can('manager.orders')
+          <a href="{{route('orders.create')}} "class="btn btn-primary nav-zoom"> 
+          <i class="fa-solid fa-plus"></i> Tambah Order</a>
+      @endcan
+    </div>
   </div>
-</div>
-<div class="row">
+
+    <div class="row-mt-5">
+      <div class="col-lg-12">
+        <form action="{{ route('orders') }}" method="GET" class="mt-4">
+          <div class="row g-2">
+            <div class="col-md-5">
+              <input type="text" name="search" id="search" class="form-control" 
+              placeholder="Cari Nama Customer" value="{{ $search ?? '' }}" >
+            </div>
+            <div class="col-md-3">
+              <select name="status" class="form-select">
+                <option value="">semua status</option>
+                @foreach ($status_data as $data)
+                <option value="{{ $data }}" {{ ($status ?? '') === $data ? 'selected' : ' ' }}>{{ $data }}</option>
+                @endforeach
+              </select>
+            </div>
+                <div class="col-md-2">
+                  <button type="submit" class="btn btn-primary w-100 nav-zoom">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    Cari
+                  </button>
+                </div>
+
+              <div class="col-md-2">
+                  <a href="{{ route ('orders')}}" class="btn btn-secondary w-100 nav-zoom">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                    Reset
+                  </a>
+              </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="crad border-1 shadow-sm">
+          <div class="card body">
+            <h6 class="text-center">Total 0rder</h6>
+            <h3 class="text-center fw-bold">
+              {{ number_format($totalOrders,0, ', ', '.' ) }}
+            </h3>
+            <small class="text-center">
+              jumlah order sesuai filter aktif
+            </small>
+          </div>
+        </div>
+      </div>
+
+       <div class="col-md-6">
+        <div class="crad border-1 shadow-sm">
+          <div class="card body">
+            <h6 class="text-center">Total Transaksi</h6>
+            <h3 class="text-center fw-bold">
+              Rp{{ number_format(  $totalAmount,0, ', ', '.' ) }}
+            </h3>
+            <small class="text-center" >
+              jumlah total transaksi order sesuai filter aktif
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+
+
+<div class="row mt-2">
     <div class="col-lg-12">
+      
       <h1> Data Order</h1>
 
       @if(session('success'))
@@ -27,7 +94,6 @@
               <th scope="col">status</th>
              <th scope="col">Action</th>
             </tr>
-            </tr>
         </thead>
 
         <tbody>
@@ -35,7 +101,7 @@
               @foreach($orders as $order)
                  <tr>
                    <td>{{ $orders->firstItem() + $loop->index }}</td>
-                    <td>{{ $order->customer->name }}</td>
+                    <td>{{ $order->Customer->name }}</td>
                     <td>{{ $order->order_number }}</td>
                     <td>{{ $order->order_date }}</td>
                     <td>{{ $order->total }}</td>
