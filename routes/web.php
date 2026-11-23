@@ -6,6 +6,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\ProductsController;
 
 
@@ -94,6 +95,39 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name("dashboard
 Route::get('/about', [AboutController::class, 'about']);
  
 });
+
+
+//Route untuk Services
+//Route::get('/', [CustomerController::class, 'index']);
+
+Route::get('/services', [ServicesController::class, 'index'])
+    ->middleware('can:view.services')
+    ->name("services");
+
+Route::get('/services/create',[ServicesController::class, 'create'])
+    ->middleware('can:manager.services')
+    ->name('services.create');
+
+Route::get('/services/{id}',[ServicesController::class, 'show'])
+    ->middleware('can:view.services')
+    ->name('services.show');
+
+Route::put('/services/{id}',[ServicesController::class, 'update'])
+    ->middleware('can:manager.services')
+    ->name('services.update');
+
+Route::delete('/services/{id}',[ServicesController::class, 'destroy'])
+    ->middleware('can:delete.services')
+    ->name('services.delete');
+
+Route::get('/services/{id}/edit',[ServicesController::class, 'edit'])
+    ->middleware('can:manager.services')
+    ->name('services.edit');
+
+Route::post('/services/store',[ServicesController::class, 'store'])
+    ->middleware('can:manager.services')
+    ->name('services.store');
+//Akhir Route Buat services
 
 
  

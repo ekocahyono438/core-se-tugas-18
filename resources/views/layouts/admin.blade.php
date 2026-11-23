@@ -64,9 +64,9 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link active  nav-zoom " href="{{url('/products')}}">
+                <a class="nav-link active  nav-zoom " href="{{url('/services')}}">
                 <i class="fa-solid fa-box"></i>
-                Products</a>
+                Services</a>
             </li> 
 
               <li class="nav-item">

@@ -7,16 +7,16 @@
 </div>
 <div class="row">
             <div class="col-lg-12">
-              <h1>Edit Order Customer</h1>
+              <h1>Edit Services Customer</h1>
 
-              <form action="{{ route('orders.update', $orders->id) }}" method="POST">
+              <form action="{{ route('orders.update', $order->id) }}" method="POST">
                 @csrf
                 @method("PUT")
                
                      @include ('orders._form')
                      <div class="mt-3">
                       <a href="{{ route ('orders')}}" class="btn btn-secondary nav-zoom "> Cencel</a>
-                      <button type="submit" class="btn btn-primary nav-zoom "> Update Order Data</button>
+                      <button type="submit" class="btn btn-primary nav-zoom "> Update Services Data</button>
                      </div>
               </form>
     

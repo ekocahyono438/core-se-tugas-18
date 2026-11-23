@@ -22,6 +22,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {    
+        //untuk services
+        Paginator::useBootstrapFive();
+        Gate::define('view.services', function($user){
+            return in_array($user->role, ['admin', 'staff', 'manager']);
+        });
+    
+        Gate::define('manager.services', function($user){
+            return in_array($user->role, ['admin', 'staff']);
+        });
+
+         Gate::define('delete.services', function($user){
+            return in_array($user->role, ['admin', ]);
+        });
+        //akhir untuk services
+
+         
         //untuk customers
         Paginator::useBootstrapFive();
         Gate::define('view.customers', function($user){
@@ -35,7 +51,7 @@ class AppServiceProvider extends ServiceProvider
          Gate::define('delete.customers', function($user){
             return in_array($user->role, ['admin', ]);
         });
-        //akhir untuk customers
+        //akhir untuk custom
 
 
         //untuk orders

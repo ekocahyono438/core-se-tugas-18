@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\OrderRequest;
 use App\Models\Customer;
 use App\Models\Order;
-use Illuminate\http\Request;
-use App\Http\Requests\OrderRequest;
 use App\Services\OrderServices;
+use Illuminate\http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Service;
 
 class OrderController extends Controller
 {
@@ -32,7 +33,7 @@ class OrderController extends Controller
     $totalAmount = (clone $query)->sum('total');
 
     $orders = (clone $query)
-        ->with('Customer')
+        ->with('Customer', 'service')
         ->latest()
         ->paginate(5)
         ->withQueryString();
@@ -56,7 +57,8 @@ class OrderController extends Controller
 
     public function create(){
         $customers = Customer::orderBy('name')->get();
-        return view('orders.create', ['customers'=> $customers]);
+        $services = Service::orderBy('name')->get();
+        return view('orders.create', compact('customers', 'services'));
     }
 
      public function store(OrderRequest $request, OrderServices $orderServices){
@@ -82,10 +84,11 @@ class OrderController extends Controller
     }
 
     public function edit(int $id){
-      $orders= Order::findOrfail($id);
-      $customers= Customer::all();
+      $order = Order::findOrfail($id);
+      $customers = Customer::all();
+      $services  = Service::orderBy('name')->get();
 
-      return view('orders.edit',['orders'=> $orders, 'customers'=>$customers]);
+      return view('orders.edit', compact('order', 'customers', 'services'));
     }
 
     public function update(OrderRequest $request , int $id){
@@ -95,6 +98,7 @@ class OrderController extends Controller
       $orders->update([
         'customer_id' => $request->customer_id,
         'order_number' => $request->order_number,
+        'service_id' => $request->service_id,
         'order_date' => $request->order_date,
         'total' => $request->total,
         'status' => $request->status,
@@ -115,7 +119,7 @@ class OrderController extends Controller
         $orders= Order::findOrfail($id);
         $orders->delete();
         
-        return redirect()->route('orders')->with('seccess', 'order berhasil dihapus.');
+        return redirect()->route('orders')->with('success', 'order berhasil dihapus.');
   }
   
 

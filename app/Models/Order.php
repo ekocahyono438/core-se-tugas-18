@@ -9,15 +9,28 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Order extends Model
 {
+    public const STATUS_PENDING = 'pending';
+
     protected $fillable = [
         'customer_id',
         'order_number',
+        'service_id',
         'order_date',
         'total',
         'status',
         'approved_at',
         'approved_by'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'total' => 'decimal:2',
+            'order_date' => 'datetime',
+            'approved_at' => 'datetime',
+        ];
+    }
+    
     public function Customer(): BelongsTo {
         return $this->belongsTo(Customer::class);
     }
@@ -32,7 +45,12 @@ class Order extends Model
 
     public function logs(): HasMany
     {
-    return $this->hasMany(OrderLog::class);
+        return $this->hasMany(OrderLog::class);
+    }
+
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
     }
 
 

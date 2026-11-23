@@ -25,6 +25,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'customer_id'=> 'required',
+            'service_id'   => ['required', 'exists:services,id'],
             'order_number'=> 'required|string|max:10',
             'order_date'=> 'required',
             'total'=> 'required|numeric',

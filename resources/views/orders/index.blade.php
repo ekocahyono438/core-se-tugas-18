@@ -44,13 +44,13 @@
     </div>
     <div class="row mt-3">
       <div class="col-md-6">
-        <div class="crad border-1 shadow-sm">
-          <div class="card body">
-            <h6 class="text-center">Total 0rder</h6>
+        <div class="card border-1 shadow-sm">
+          <div class="card-body">
+            <h6 class="text-center">Total Order</h6>
             <h3 class="text-center fw-bold">
               {{ number_format($totalOrders,0, ', ', '.' ) }}
             </h3>
-            <small class="text-center">
+            <small class="text-center d-block text-muted">
               jumlah order sesuai filter aktif
             </small>
           </div>
@@ -58,13 +58,13 @@
       </div>
 
        <div class="col-md-6">
-        <div class="crad border-1 shadow-sm">
-          <div class="card body">
+        <div class="card border-1 shadow-sm">
+          <div class="card-body">
             <h6 class="text-center">Total Transaksi</h6>
             <h3 class="text-center fw-bold">
               Rp{{ number_format(  $totalAmount,0, ', ', '.' ) }}
             </h3>
-            <small class="text-center" >
+            <small class="text-center d-block text-muted" >
               jumlah total transaksi order sesuai filter aktif
             </small>
           </div>
@@ -89,9 +89,10 @@
             <th scope="col">No</th>
             <th scope="col">Customer Nama</th>
             <th scope="col">Order number</th>
+            <th scope="col">Service</th>
             <th scope="col">Order date</th>
-             <th scope="col">total</th>
-              <th scope="col">status</th>
+            <th scope="col">total</th>
+            <th scope="col">status</th>
              <th scope="col">Action</th>
             </tr>
         </thead>
@@ -101,10 +102,11 @@
               @foreach($orders as $order)
                  <tr>
                    <td>{{ $orders->firstItem() + $loop->index }}</td>
-                    <td>{{ $order->Customer->name }}</td>
-                    <td>{{ $order->order_number }}</td>
-                    <td>{{ $order->order_date }}</td>
-                    <td>{{ $order->total }}</td>
+                    <td>{{ $order->Customer?->name ?? '-'}}</td>
+                    <td>{{ $order->order_number ?? '-' }}</td>
+                    <td>{{ $order->service?->description ?? 'belum ada service' }}</td>
+                    <td>{{ $order->order_date?->format('d-m-Y') }}</td>
+                    <td>Rp{{ number_format($order->total, 0, ',', '.') }}</td>
                     <td>{{ $order->status }}</td>
                   <td >
                     @can('approve.orders', $order)
