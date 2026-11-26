@@ -1,62 +1,60 @@
-@extends("layouts.admin")
-@section("content")
-<div class="row mt-5">
-  <div class="col-lg-12 d-flex justify-content-end">
-      <a href="{{route('customers.create')}} "class="btn btn-primary">  <i class="fa-solid fa-plus"></i>Tambah Customer</a>
-  </div>
-</div>
-<div class="row">
-    <div class="col-lg-12">
-      <h1> Data Customer</h1>
+@extends('layouts.adminCopy')
 
-      @if(session('success'))
-      <div class="alert alert-success">{{ session ('success') }}</div>
-      @endif
-
-    <table class="table">
-        <thead>
-            <tr>
-            <th scope="col">No</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">City</th>
-             <th scope="col">Action</th>
-            </tr>
-            </tr>
-        </thead>
-
-        <tbody>
-             
-              @foreach( $dashboards as $dashboard)
-              <tr>
-                  <td>{{ $dashboards->firstItem() + $loop->index }}</td>
-                  <td>{{ $dashboard['name'] }}</td>
-                  <td>{{ $dashboard['email'] }}</td>
-                  <td>{{ $dashboard['city'] }}</td>
-                  <td >
-                    <a href="{{ route('customers.show', $dashboard['id']) }}" class="btn btn-primary ">  <i class="fa-solid fa-eye"></i> Detal </a>
-                    <a href="{{ route('customers.edit', $dashboard['id']) }}" class="btn btn-warning "> <i class="fa-solid fa-pen-to-square"></i>Edit</a>
-                    <form action="{{ route('customers.delete', $dashboard['id']) }}"
-                      method="POST" style="display:inline;"
-                      onsubmit="return confirm('apakah anda yakin menghapus data ini?')">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger" >  <i class="fa-solid fa-trash"></i>Delete</button>
-                    </form>
-                  </td>
-              </tr>
-             
-              @endforeach
-        </tbody>
-      
-    </table>
-    </div>    
-  </div>
-  
-    <div class="col-lg-12">
-      {{ $dashboards->links() }}
+@section('content')
+<div class="glass-panel p-4">
+    <!-- Header Judul & Tombol Tambah -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold mb-0">Data Dashbord</h2>
+        <a href="{{ route('dashboard') }}" class="btn btn-primary shadow-sm">
+            <i class="fa-solid fa-plus me-1"></i> Tambah Dashboard
+        </a>
     </div>
-  
 
+    <!-- Tabel Customer -->
+    <div class="table-responsive">
+        <table class="table table-glass table-hover align-middle">
+            <thead>
+                <tr class="text-white-50">
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ( $dashboards as $index => $dashboard)
+                <tr>
+                    <td>{{  $dashboards->firstItem() + $index }}</td>
+                    <td class="fw-medium">{{ $dashboard->name }}</td>
+                    <td>{{ $dashboard->email }}</td>
+                    <td>{{ $dashboard->city }}</td>
+                    <td>
+                        <div class="d-flex gap-2">
+                            <a href="{{ route('dashboard.show', $dashboard->id) }}" class="btn btn-sm btn-primary">
+                                <i class="fa-solid fa-eye me-1"></i> Detail
+                            </a>
+                            <a href="{{ route('dashboard.edit', $dashboard->id) }}" class="btn btn-sm btn-warning">
+                                <i class="fa-solid fa-pen-to-square me-1"></i> Edit
+                            </a>
+                            <form action="{{ route('dashboard.delete', $dashboard->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">
+                                    <i class="fa-solid fa-trash me-1"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-end mt-3">
+        {{  $dashboards->links() }}
+    </div>
+</div>
 @endsection
-           

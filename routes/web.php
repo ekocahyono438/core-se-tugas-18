@@ -136,7 +136,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::get('/dashboard',[CustomerController::class, 'index'])->name("customers");
+//route untuk dashboard
+Route::get('/dashboard',[DashboardController::class, 'index'])->name("dashboard");
+Route::get('/dashboard/create',[DashboardController::class, 'create'])->name('dashboard.create');
+Route::post('/dashboard/store',[DashboardController::class, 'store'])->name('dashboard.store');
+Route::put('/dashboard/{id}',[DashboardController::class, 'update'])->name('dashboard.update');
+Route::delete('/dashboard/{id}',[DashboardController::class, 'destroy'])->name('dashboard.delete');
+Route::get('/dashboard/{id}/edit',[DashboardController::class, 'edit'])->name('dashboard.edit');
+Route::get('/dashboard/{id}',[DashboardController::class, 'show'])->name('dashboard.show');
+// Akhir Route buat dashboard
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
